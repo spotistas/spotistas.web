@@ -6,10 +6,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        greenButton: '#1ED760'
+      },
       fontFamily: {
         poppins: ['Poppins'],
         gotham: ['gotham']
-      }
+      },
     },
   },
   plugins: [],
