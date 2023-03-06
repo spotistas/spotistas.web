@@ -1,18 +1,17 @@
-import Logo from '../assets/logo.svg'
+import Logo from '../assets/logo.png'
+import { Login } from './Login'
 
 export function Header() {
     return(
-        <div className='flex justify-between px-11 py-6'> 
+        <div className='flex justify-between px-11 py-6 text-textHeader'> 
             <img
                 className='w-40'
                 src={Logo} 
-                alt="logo" 
+                alt="logo image" 
             />
-           <button
-            className='bg-greenButton text-base font-poppins font-medium px-12 py-4 rounded-full'
-            >
-                Login
-            </button>
+            <Login
+            buttonText="Login"
+            />
         </div>
     )
 }
