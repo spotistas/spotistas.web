@@ -4,7 +4,7 @@ import { Login } from "./Login";
 export function Home() {
     return(
         <div>
-            <div className="bg-bgHome sm:bg-cover bg-no-repeat h-screen">
+            <div className="bg-[url('../assets/backgroundHome.jpg')] bg-cover bg-no-repeat h-screen">
                 <Header/>
                 <div className='flex'>
                 <div className="text-white text-center mx-auto w-[1000px]">
