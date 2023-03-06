@@ -7,7 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        greenButton: '#1ED760'
+        greenButton: '#1ED760',
+        textHeader: '#1E1E1E'
+      },
+      backgroundImage: {
+        bgHome: "url('./src/assets/backgroundHome.jpg')"
       },
       fontFamily: {
         poppins: ['Poppins'],
