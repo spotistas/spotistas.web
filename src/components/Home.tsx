@@ -1,3 +1,4 @@
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Login } from "./Login";
 
@@ -24,8 +25,7 @@ export function Home() {
                 </div>
                 </div>
             </div>
-            <div className='bg-black'>
-            </div>
+            <Footer />
         </div>
     )
 }

@@ -8,7 +8,9 @@ module.exports = {
     extend: {
       colors: {
         greenButton: '#1ED760',
-        textHeader: '#1E1E1E'
+        textHeader: '#1E1E1E',
+        bgFooter: '#171A20'
+
       },
       fontFamily: {
         poppins: ['Poppins'],
