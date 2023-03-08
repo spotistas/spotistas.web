@@ -4,20 +4,20 @@ import { Login } from "./Login";
 
 export function Home() {
     return(
-            <div className="bg-[url('../assets/backgroundHome.jpg')] bg-cover bg-no-repeat">
+            <div className="sm:bg-[url('../assets/backgroundHome.jpg')] bg-black bg-cover bg-no-repeat">
                 <Header/>
                 <div className='flex'>
                     <div className="text-white text-center mx-auto w-[1000px]">
                         <h1 
-                        className="text-6xl font-gotham font-bold mt-[400px] mx-10">
+                        className="2xl:text-6xl sm:text-4xl text-xl  font-gotham font-bold sm:mt-44 2xl:mt-[400px] mt-56 mx-10">
                             Veja a sua história através das musicas que você escuta
                         </h1>
                         <p
-                        className="text-2xl font-poppins font-medium mt-16 mx-10 mb-20"
+                        className="opacity-50 2xl:text-2xl sm:text-base text-xs font-poppins font-medium sm:my-16 my-8 sm:mb-20 mx-10"
                         >
                             Explore estatísticas detalhadas, compare seus gostos com os de seus amigos e descubra novos artistas. Transforme seus dados em diversão e comece a explorar agora mesmo!
                         </p>
-                        <div className='pb-20'>
+                        <div className='sm:pb-24 pb-10'>
                             <Login
                             buttonText="Entrar com Spotify"/>
                         </div>
