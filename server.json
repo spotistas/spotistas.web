@@ -1,0 +1,113 @@
+{
+  "monthArtist": {
+    "id": 1,
+    "name": "Dua Lipa",
+    "imageUrl": "https://pbs.twimg.com/media/FEVlbC8XIA8z_fr?format=jpg&name=medium",
+    "musics": [
+      {
+        "id": 1,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 2,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 3,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 5,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      }
+    ]
+  },
+  "dayMusic": {
+    "title": "Dynamite",
+    "bgMusic":"https://portalpopline.com.br/wp-content/uploads/2020/11/BTS-3-1.jpg",
+    "artist": "BTS",
+    "artistProfile": "https://ichef.bbci.co.uk/news/976/cpsprodpb/176A3/production/_126170959_gettyimages-1207828603.jpg.webp",
+    "album": "Be",
+    "release": "2020",
+    "about": "“Dynamite” é uma música disco-pop animada que canta alegria e confiança, trazendo uma nova onda de 'energia' para revigorar a comunidade durante esses tempos difíceis."
+  },
+
+  "topTen": 
+    [
+      {
+        "id": 1,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 2,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 3,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 5,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 6,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 7,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 8,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 9,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      },
+      {
+        "id": 10,
+        "title": "Levitating",
+        "album": "Future Nostalgia",
+        "albumBg": "https://m.media-amazon.com/images/I/71VQFsqlPJL._AC_SL1425_.jpg"
+      }
+    ]
+  
+}

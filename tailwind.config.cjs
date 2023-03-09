@@ -9,7 +9,8 @@ module.exports = {
       colors: {
         greenButton: '#1ED760',
         textHeader: '#1E1E1E',
-        bgFooter: '#171A20'
+        bgFooter: '#171A20',
+        bgMain: '#111112'
 
       },
       fontFamily: {
