@@ -16,6 +16,12 @@ module.exports = {
         poppins: ['Poppins'],
         gotham: ['gotham']
       },
+      backgroundImage: {
+        home: "url('src/assets/backgroundHome.jpg')",
+        homeMobile: "url('src/assets/backgroundHomeMobile.png')",
+        gradientHome: "linear-gradient(180deg, rgba(17, 17, 18, 0) 23.85%, #111112 83.73%);"
+
+      }
     },
   },
   plugins: [],
