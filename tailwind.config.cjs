@@ -17,8 +17,8 @@ module.exports = {
         gotham: ['gotham']
       },
       backgroundImage: {
-        home: "url('src/assets/backgroundHome.jpg')",
-        homeMobile: "url('src/assets/backgroundHomeMobile.png')",
+        home: "url('/backgroundHome.jpg')",
+        homeMobile: "url('/backgroundHomeMobile.png')",
         gradientHome: "linear-gradient(180deg, rgba(17, 17, 18, 0) 23.85%, #111112 83.73%);"
 
       }
