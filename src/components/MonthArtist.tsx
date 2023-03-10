@@ -28,12 +28,12 @@ export function MonthArtist() {
         getMonthArtist()
     },[])
     return(
-        <div className="rounded-lg w-[665px] mx-auto text-white">
-            <div className=' bg-monthArtist pt-32 pb-9 pl-7'>
+        <div className="w-[665px] mx-auto text-white ">
+            <div className='rounded-t-3xl pt-32 pb-9 pl-7 bg-center h-[245px]' style={{backgroundImage: `url(${monthArtist.imageUrl})`}}>
                 <p className="font-medium text-2xl">Artista do Mês</p>
                 <p className="font-bold text-5xl">{monthArtist.name}</p>
             </div>
-            <div className="bg-gradientGrid rounded-b-lg pb-11">
+            <div className="bg-gradientGrid rounded-b-3xl pb-11 h-[630px]">
                 {monthArtist.musics.map((music, index) => (
                     <div key={index} className="flex pt-10 pl-20">
                         <div>
