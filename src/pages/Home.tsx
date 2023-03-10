@@ -1,9 +1,10 @@
-
 import { Header } from "../components/Header";
 import { Login } from "../components/Login";
+import { MonthArtist } from "../components/MonthArtist";
 
 export function Home() {
 	return (
+		<div>
 		<div className="sm:bg-home bg-homeMobile bg-cover bg-no-repeat bg-center">
 			<div className="bg-gradientHome">
 				<Header />
@@ -25,7 +26,10 @@ export function Home() {
 					</div>
 				</div>
 			</div>
-	
+		</div>
+			<div className="mt-40 ml-auto pb-10">
+				<MonthArtist/>
+			</div>
 		</div>
 	)
 }
