@@ -28,7 +28,7 @@ export function MonthArtist() {
         getMonthArtist()
     },[])
     return(
-        <div className="w-[665px] mx-auto text-white ">
+        <div className="w-[665px] mx-auto text-white">
             <div className='rounded-t-3xl pt-32 pb-9 pl-7 bg-center h-[245px]' style={{backgroundImage: `url(${monthArtist.imageUrl})`}}>
                 <p className="font-medium text-2xl">Artista do Mês</p>
                 <p className="font-bold text-5xl">{monthArtist.name}</p>
