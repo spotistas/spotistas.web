@@ -27,9 +27,16 @@ export function Home() {
 				</div>
 			</div>
 		</div>
-			<div className="mt-40 ml-auto pb-10">
-				<MonthArtist/>
+		<div className="mx-10">
+			<div className="flex mx-auto max-w-[1500px] flex-wrap justify-center">
+				<div className="mt-40 pb-10">
+					<MonthArtist/>
+				</div>
+				<div className="mt-40 ml-5 pb-10">
+
+				</div>
 			</div>
+		</div>
 		</div>
 	)
 }
