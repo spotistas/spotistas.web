@@ -33,7 +33,7 @@ export function Home() {
 						<MonthArtist/>
 					</div>
 					<div className="xxl:ml-5 pb-10">
-						<MonthArtist/>
+
 					</div>
 				</div>
 			</div>
