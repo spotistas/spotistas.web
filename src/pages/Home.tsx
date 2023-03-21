@@ -15,7 +15,7 @@ export function Home() {
 								Veja a sua história através das musicas que você escuta
 							</h1>
 							<p
-								className="opacity-50 2xl:text-2xl sm:text-base text-xs font-poppins font-medium sm:my-16 my-8 sm:mb-20 mx-10"
+								className="opacity-50 2xl:text-2xl sm:text-base text-xs font-poppins font-medium 2xl:my-16 my-8 mx-10"
 							>
 								Explore estatísticas detalhadas, compare seus gostos com os de seus amigos e descubra novos artistas. Transforme seus dados em diversão e comece a explorar agora mesmo!
 							</p>
@@ -27,13 +27,13 @@ export function Home() {
 					</div>
 				</div>
 			</div>
-			<div className="mx-10">
-				<div className="md:mt-40 mt-10 flex mx-auto md:max-w-[1350px] max-w-[600px] flex-wrap justify-center">
+			<div className="md:mx-10">
+				<div className="md:mt-40 mt-10 flex mx-auto md:max-w-[1440px] max-w-[600px] flex-wrap justify-center">
 					<div className=" pb-10">
 						<MonthArtist/>
 					</div>
-					<div className="xxl:ml-5 pb-10">
-
+					<div className="pb-10">
+						<MonthArtist/>
 					</div>
 				</div>
 			</div>
