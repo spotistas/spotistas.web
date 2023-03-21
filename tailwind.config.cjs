@@ -21,11 +21,11 @@ module.exports = {
         homeMobile: "url('/backgroundHomeMobile.png')",
         monthArtist: "url('/duaLipabg.png')",
         gradientHome: "linear-gradient(180deg, rgba(17, 17, 18, 0) 23.85%, #111112 83.73%);",
-        gradientImage: "linear-gradient(180deg, rgba(0, 0, 0, 0) 12.26%, rgba(0, 0, 0, 0.75) 60.01%);",
         gradientGrid: "linear-gradient(180deg, #48313D 0%, #171A20 68.44%);"
       },
       screens: {
-        xxl : '1410px'
+        xxl : '1410px',
+        smm: '400px'
       }
     },
   },
