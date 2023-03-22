@@ -33,7 +33,6 @@ export function Home() {
 						<MonthArtist/>
 					</div>
 					<div className="pb-10">
-						<MonthArtist/>
 					</div>
 				</div>
 			</div>

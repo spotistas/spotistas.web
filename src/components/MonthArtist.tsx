@@ -7,21 +7,21 @@ interface Props {
     name: string,
     tracks: {
         name: string,
+        image: string,
+        preview_url: string,
         album:{
-            name: string
+            name: string,
         }, 
-        image: string
     }[],
 }
 
-
 export function MonthArtist() {
     const [monthArtist, setMonthArtist] = useState<Props>({image: "", name: "", tracks: []}) 
-
     const getMonthArtist = async() => {
         try {
-            const response = await axios.get("https://spotistas.onrender.com/artists/month");
+            const response = await axios.get("https://spotistas.onrender.com/artists/month")
             const Artist = response.data
+            console.log(Artist)
             setMonthArtist(Artist)
         } catch (error) {
             console.log(error);
@@ -30,7 +30,23 @@ export function MonthArtist() {
     useEffect(() => {
         getMonthArtist()
     },[])
-    
+
+    const [showDiv, setShowDiv] = useState(false)
+    const [urlMusic, setUrlMusic] = useState("")
+    const [image, setImage] = useState("")
+    const [music, setmMsic] = useState("")
+    const [album, setAlbum] = useState("")
+
+    const previewMusic = (urlMusic: string, image: string, music: string, album: string) => {
+        if (!showDiv) {
+            setShowDiv(true);
+          }
+        setUrlMusic(urlMusic);
+        setImage(image);
+        setmMsic(music);
+        setAlbum(album);
+      };
+
     return(
         <div className="2xl:w-[665px] sm:w-[550px] text-white smm:mx-5">
             {Object.keys(monthArtist.image && monthArtist.name && monthArtist.tracks).length === 0 ? (
@@ -46,12 +62,19 @@ export function MonthArtist() {
                 <div className="bg-gradientGrid rounded-b-3xl pb-11">
                     {monthArtist.tracks.slice(0, 5).map((tracks, index) => (
                         <div key={index} className="flex pt-10 2xl:pl-20 sm:pl-8  pl-4 max-2xl:pr-8">
-                            <div>
-                                <img
-                                    className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto" 
-                                    src={tracks.image} 
-                                />
-                            </div>
+                                <div>
+                                    <button onClick={() => previewMusic(tracks.preview_url, tracks.image, tracks.name, tracks.album.name,)}>
+                                        <div className="relative">
+                                            <img
+                                                className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto w-full h-auto" 
+                                                src={tracks.image}
+                                                alt="music album image"
+                                            />
+                                            <div className="absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat"></div>
+                                        </div>  
+                                    </button>
+                                </div>
+
                             <div className="sm:pl-5 pl-2 flex flex-col justify-center ">
                                 <p  className="font-bold 2xl:text-3xl sm:text-lg text-sm">{tracks.name}</p>
                                 <p className="font-bold 2xl:text-2xl sm:text-base text-xs opacity-50">{tracks.album.name}</p>
@@ -59,6 +82,25 @@ export function MonthArtist() {
                         </div>
                     ))}
                 </div>
+                    {showDiv && (
+                        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 ">
+                            <div className="flex justify-center items-center p-2">
+                                <div>
+                                    <img
+                                        className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
+                                        src={image} 
+                                    />
+                                </div>
+                                <div className="sm:pl-5 pl-2 flex flex-col justify-center">
+                                    <p className="font-bold 2xl:text-lg sm:text-base text-sm">{music}</p>
+                                    <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50">{album}</p>
+                                </div>
+                            </div> 
+                            <div>
+                                                
+                            </div>
+                        </div>
+                    )}
             </div>
             )}
         </div>
