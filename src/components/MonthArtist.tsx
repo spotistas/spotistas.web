@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import axios from "axios"
-import { CircleNotch } from "@phosphor-icons/react"
+import { CircleNotch, Play, SkipBack, SkipForward, Pause } from "@phosphor-icons/react"
 
 interface Props {
     image: string,
@@ -24,7 +24,7 @@ export function MonthArtist() {
             console.log(Artist)
             setMonthArtist(Artist)
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
     }
     useEffect(() => {
@@ -34,20 +34,42 @@ export function MonthArtist() {
     const [showDiv, setShowDiv] = useState(false)
     const [urlMusic, setUrlMusic] = useState("")
     const [image, setImage] = useState("")
-    const [music, setmMsic] = useState("")
+    const [music, setMusic] = useState("")
     const [album, setAlbum] = useState("")
 
     const previewMusic = (urlMusic: string, image: string, music: string, album: string) => {
         if (!showDiv) {
-            setShowDiv(true);
-          }
-        setUrlMusic(urlMusic);
-        setImage(image);
-        setmMsic(music);
-        setAlbum(album);
-      };
+            setShowDiv(true)
+        }
+        setUrlMusic(urlMusic)
+        setImage(image)
+        setMusic(music)
+        setAlbum(album)
+        }
 
-    return(
+        const audioPlayer: React.RefObject<HTMLAudioElement> = React.createRef()
+        const [isPlaying, setIsPlaying] = useState(true)
+        useEffect(() => {
+            if (audioPlayer.current && !audioPlayer.current.paused) {
+              audioPlayer.current.pause()
+              setIsPlaying(false)
+            }
+        }, [urlMusic])
+
+
+        const toggleAudio = () => {
+            if (audioPlayer.current) {
+                if (audioPlayer.current.paused) {
+                    audioPlayer.current.play()
+                    setIsPlaying(true)
+                } else {
+                    audioPlayer.current.pause()
+                    setIsPlaying(false)
+                }
+            }
+        }
+
+    return  (
         <div className="2xl:w-[665px] sm:w-[550px] text-white smm:mx-5">
             {Object.keys(monthArtist.image && monthArtist.name && monthArtist.tracks).length === 0 ? (
             <div className="h-[875px] flex justify-center items-center">
@@ -55,7 +77,11 @@ export function MonthArtist() {
             </div> 
             ) : (
             <div>
-                <div className='rounded-t-3xl pt-32 md:pb-9 pb-5 md:pl-7 pl-5 bg-center bg-no-repeat bg-cover' style={{backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(${monthArtist.image})`}}>
+                <div 
+                    className='rounded-t-3xl pt-32 md:pb-9 pb-5 md:pl-7 pl-5 bg-center bg-no-repeat bg-cover' 
+                    style={
+                        {backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(${monthArtist.image})`    }}
+                >
                     <p className="font-medium md:text-2xl text-xl">Artista do Mês</p>
                     <p className="font-bold md:text-5xl text-4xl">{monthArtist.name}</p>
                 </div>
@@ -83,8 +109,8 @@ export function MonthArtist() {
                     ))}
                 </div>
                     {showDiv && (
-                        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 ">
-                            <div className="flex justify-center items-center p-2">
+                        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex justify-around p-2 items-center">
+                            <div className="flex justify-center items-center">
                                 <div>
                                     <img
                                         className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
@@ -96,8 +122,27 @@ export function MonthArtist() {
                                     <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50">{album}</p>
                                 </div>
                             </div> 
-                            <div>
-                                                
+                            <div >
+                                <audio ref={audioPlayer} src={urlMusic} autoPlay onLoadedData={
+                                    () => {
+                                        if (audioPlayer.current) {
+                                            setIsPlaying(!audioPlayer.current.paused)
+                                        }
+                                    }
+                                }>
+                                    <source  type="audio/mpeg" />
+                                </audio>
+                                <div className="flex justify-around text-2xl my-auto ">
+                                    <button>
+                                        <SkipBack className="mx-2"/>
+                                    </button>
+                                    <button onClick={toggleAudio}>
+                                        {isPlaying ? <Pause className="mx-2" /> : <Play className="mx-2"/>}
+                                    </button>
+                                    <button>
+                                        <SkipForward className="mx-2"/>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}
