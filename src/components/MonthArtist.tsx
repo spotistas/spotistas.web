@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { CircleNotch, Play, SkipBack, SkipForward, Pause } from "@phosphor-icons/react"
 
@@ -38,8 +38,10 @@ export function MonthArtist() {
     const [album, setAlbum] = useState("")
 
     const previewMusic = (urlMusic: string, image: string, music: string, album: string) => {
-        if (!showDiv) {
+        if (!showDiv && urlMusic.length > 0) {
             setShowDiv(true)
+        } else if (urlMusic.length == 0) {
+            setShowDiv(false)
         }
         setUrlMusic(urlMusic)
         setImage(image)
@@ -48,11 +50,11 @@ export function MonthArtist() {
         }
 
         const audioPlayer: React.RefObject<HTMLAudioElement> = React.createRef()
-        const [isPlaying, setIsPlaying] = useState(true)
+        const [isPlaying, setIsPlaying] = useState(false)
         useEffect(() => {
             if (audioPlayer.current && !audioPlayer.current.paused) {
-              audioPlayer.current.pause()
-              setIsPlaying(false)
+                audioPlayer.current.pause()
+                setIsPlaying(false)
             }
         }, [urlMusic])
 
@@ -89,14 +91,27 @@ export function MonthArtist() {
                     {monthArtist.tracks.slice(0, 5).map((tracks, index) => (
                         <div key={index} className="flex pt-10 2xl:pl-20 sm:pl-8  pl-4 max-2xl:pr-8">
                                 <div>
-                                    <button onClick={() => previewMusic(tracks.preview_url, tracks.image, tracks.name, tracks.album.name,)}>
+                                    <button onClick={() => {
+                                        previewMusic(tracks.preview_url, tracks.image, tracks.name, tracks.album.name,)
+                                        toggleAudio()
+                                    }}>
                                         <div className="relative">
                                             <img
                                                 className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto w-full h-auto" 
                                                 src={tracks.image}
                                                 alt="music album image"
                                             />
-                                            <div className="absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat"></div>
+                                            {tracks.preview_url?.length > 0 ? ( 
+                                                <div>
+                                                    {tracks.preview_url == urlMusic ? (
+                                                    <div className={`absolute inset-0 z-7 hover:bg-${!isPlaying ? 'play' : 'pause'} bg-center bg-no-repeat`}></div>
+                                                    ) : (
+                                                    <div className={`absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat`}></div>
+                                                    )}
+                                                </div>
+                                                ) : (
+                                                <div></div>
+                                            )}
                                         </div>  
                                     </button>
                                 </div>
@@ -137,7 +152,7 @@ export function MonthArtist() {
                                         <SkipBack className="mx-2"/>
                                     </button>
                                     <button onClick={toggleAudio}>
-                                        {isPlaying ? <Pause className="mx-2" /> : <Play className="mx-2"/>}
+                                        {!isPlaying ? <Play className="mx-2" /> : <Pause className="mx-2"/>}
                                     </button>
                                     <button>
                                         <SkipForward className="mx-2"/>
