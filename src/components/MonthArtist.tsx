@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { CircleNotch, Play, SkipBack, SkipForward, Pause, Divide } from "@phosphor-icons/react"
+import { CircleNotch, Play, SkipBack, SkipForward, Pause } from "@phosphor-icons/react"
 
 interface Props {
     image: string,
@@ -12,11 +12,12 @@ interface Props {
         album:{
             name: string,
         }, 
+        index: number
     }[],
 }
 
 export function MonthArtist() {
-    const [monthArtist, setMonthArtist] = useState<Props>({image: "", name: "", tracks: []}) 
+    const [monthArtist, setMonthArtist] = useState<Props>({image: "", name: "", tracks: []})  
     const getMonthArtist = async() => {
         try {
             const response = await axios.get("https://spotistas.onrender.com/artists/month")
@@ -37,7 +38,7 @@ export function MonthArtist() {
     const [music, setMusic] = useState("")
     const [album, setAlbum] = useState("")
 
-    const previewMusic = (urlMusic: string, image: string, music: string, album: string) => {
+    const previewMusic = (urlMusic: string, image: string, music: string, album: string, index: number) => {
         if (!showDiv && urlMusic.length > 0) {
             setShowDiv(true)
         } else if (urlMusic.length == 0) {
@@ -47,6 +48,7 @@ export function MonthArtist() {
         setImage(image)
         setMusic(music)
         setAlbum(album)
+        setCurrentTrackIndex(index)
         }
 
         const audioPlayer: React.RefObject<HTMLAudioElement> = React.createRef()
@@ -74,17 +76,18 @@ export function MonthArtist() {
         const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
 
         const previous = () => {
-            const previous = currentTrackIndex - 1
-                const previousTrack = monthArtist.tracks[previous]
-                previewMusic(previousTrack.preview_url, previousTrack.image, previousTrack.name, previousTrack.album.name)
-                setCurrentTrackIndex(previous)
+            const previousIndex = currentTrackIndex - 1
+                const previousTrack = monthArtist.tracks[previousIndex]
+                previewMusic(previousTrack.preview_url, previousTrack.image, previousTrack.name, previousTrack.album.name, previousTrack.index)
+                setCurrentTrackIndex(previousIndex)
         }
         
         const next = () => {
             const nextIndex = currentTrackIndex + 1
                 const nextTrack = monthArtist.tracks[nextIndex]
-                previewMusic(nextTrack.preview_url, nextTrack.image, nextTrack.name, nextTrack.album.name)
+                previewMusic(nextTrack.preview_url, nextTrack.image, nextTrack.name, nextTrack.album.name, nextTrack.index)
                 setCurrentTrackIndex(nextIndex)
+                console.log("click")
         }
 
     return  (
@@ -98,7 +101,7 @@ export function MonthArtist() {
                 <div 
                     className='rounded-t-3xl pt-32 md:pb-9 pb-5 md:pl-7 pl-5 bg-center bg-no-repeat bg-cover' 
                     style={
-                        {backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(${monthArtist.image})`    }}
+                        {backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(${monthArtist.image})`}}
                 >
                     <p className="font-medium md:text-2xl text-xl">Artista do Mês</p>
                     <p className="font-bold md:text-5xl text-4xl">{monthArtist.name}</p>
@@ -109,7 +112,7 @@ export function MonthArtist() {
                                 <div>
                                     {tracks.preview_url?.length > 0 ? (
                                         <button onClick={() => {
-                                        previewMusic(tracks.preview_url, tracks.image, tracks.name, tracks.album.name,)
+                                        previewMusic(tracks.preview_url, tracks.image, tracks.name, tracks.album.name, index)
                                         toggleAudio()
                                     }}>
                                             <div className="relative">
@@ -118,7 +121,6 @@ export function MonthArtist() {
                                                     src={tracks.image}
                                                     alt="music album image"
                                                 />
-                                                
                                                     <div>
                                                         {tracks.preview_url == urlMusic ? (
                                                         <div>
@@ -131,7 +133,6 @@ export function MonthArtist() {
                                                         <div className={`absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat`}></div>
                                                         )}
                                                     </div>
-                                                    
                                             </div>  
                                         </button>
                                     ):(
@@ -153,7 +154,7 @@ export function MonthArtist() {
                 </div>
                     {showDiv && (
                         <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex justify-around p-2 items-center">
-                            <div className="flex justify-center items-center w-96">
+                            <div className="flex justify-start items-start w-96">
                                 <div>
                                     <img
                                         className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
@@ -174,7 +175,6 @@ export function MonthArtist() {
                                         }
                                     }
                                 }>
-                                    <source  type="audio/mpeg" />
                                 </audio>
                                 <div className="flex justify-around text-2xl my-auto">
                                     <button onClick={previous}>
