@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { CSSProperties, useEffect, useState } from "react"
 import axios from "axios"
-import { CircleNotch, Play, SkipBack, SkipForward, Pause } from "@phosphor-icons/react"
+import { CircleNotch, Play, SkipBack, SkipForward, Pause, XCircle } from "@phosphor-icons/react"
 
 interface Props {
     image: string,
@@ -15,6 +15,10 @@ interface Props {
         index: number
     }[],
 }
+
+interface RangeInputStyles extends CSSProperties {
+    '--progress': string;
+  }
 
 export function MonthArtist() {
     const [monthArtist, setMonthArtist] = useState<Props>({image: "", name: "", tracks: []})  
@@ -51,6 +55,10 @@ export function MonthArtist() {
         setCurrentTrackIndex(index)
         }
 
+        const close = () => {
+            setShowDiv(false)
+        }
+
         const audioPlayer: React.RefObject<HTMLAudioElement> = React.createRef()
         const [isPlaying, setIsPlaying] = useState(false)
         useEffect(() => {
@@ -73,6 +81,7 @@ export function MonthArtist() {
 
         const [currentTime, setCurrentTime] = useState(0)
         const [duration, setDuration] = useState(0)
+
         useEffect(() => {
             if (audioPlayer.current) {
                 const onTimeUpdate = () => {
@@ -180,8 +189,10 @@ export function MonthArtist() {
                                         />
                                     </div>
                                     <div className="sm:pl-5 pl-2 flex flex-col justify-center">
-                                        <p className="font-bold 2xl:text-lg sm:text-base text-sm">{music}</p>
-                                        <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50">{album}</p>
+                                        <p className="font-bold 2xl:text-lg sm:text-base text-sm max-smm:hidden">{music}</p>
+                                        <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50 max-smm:hidden">{album}</p>
+                                        <p className="font-bold 2xl:text-lg sm:text-base text-sm smm:hidden">{music.slice(0, 14)+"..."}</p>
+                                        <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50 smm:hidden">{album.slice(0, 14)+"..."}</p>
                                     </div>
                                 </div> 
                                 <div className="flex items-center">
@@ -194,7 +205,7 @@ export function MonthArtist() {
                                         }
                                     }>
                                     </audio>
-                                    <div className="flex text-2xl">
+                                    <div className="flex smm:text-2xl text-base">
                                         <button onClick={previous}>
                                             <SkipBack className="mx-2"/>
                                         </button>
@@ -204,28 +215,42 @@ export function MonthArtist() {
                                         <button onClick={next}>
                                             <SkipForward className="mx-2"/>
                                         </button>
+                                        <button 
+                                            className="sm:hidden"
+                                            onClick={close}
+                                        >
+                                            <XCircle/>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col justify-around sm:w-3/5 w-full mt-2 bg-red-300">
+                            <div className="flex flex-col justify-around sm:w-3/5 w-full mt-2">
                             <input
-                                className="appearance-none w-full h-2 bg-gray-300 overflow-hidden"
+                                className="appearance-none w-full bg-gray-300 overflow-hidden range-input shadow-lg"
                                 type="range"
                                 defaultValue="0"
                                 value={currentTime}
                                 min="0"
                                 max={audioPlayer.current?.duration ?? duration}
-                                step="0.001"
+                                step="0.01"
+                                style={{'--progress': `${(currentTime / duration) * 100}%`} as RangeInputStyles}
                                 onChange={(event) => {
                                     if (audioPlayer.current) {
                                     audioPlayer.current.currentTime = event.target.valueAsNumber
                                     }
                                 }}
-                            />
+                                />
+                            </div>
+                            <div className="smm:absolute smm:top-2 smm:right-5 smm:text-2xl max-sm:hidden">
+                                <button 
+                                    onClick={close}
+                                >
+                                    <XCircle size={32} />
+                                </button>
                             </div>
                         </div>
                     )}
-            </div>
+                </div>
             )}
         </div>
     )

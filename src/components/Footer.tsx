@@ -21,10 +21,14 @@ export function Footer() {
                 </div>
                 <div className='font-bold text-right max-sm:text-center max-sm:mt-5'>
                     <p>
-                        Política de Privacidade
+                        <a href='#'>
+                            Política de Privacidade
+                        </a>
                     </p>
                     <p>
-                        Contato
+                        <a href='#'>
+                            Contato
+                        </a>
                     </p>
                 </div>
             </div>
