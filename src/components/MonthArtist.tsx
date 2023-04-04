@@ -56,10 +56,8 @@ export function MonthArtist() {
         useEffect(() => {
             if (audioPlayer.current && !audioPlayer.current.paused) {
                 audioPlayer.current.pause()
-                
             }
         }, [urlMusic])
-
 
         const toggleAudio = () => {
             if (audioPlayer.current) {
@@ -72,6 +70,25 @@ export function MonthArtist() {
                 }
             }
         }
+
+        const [currentTime, setCurrentTime] = useState(0)
+        const [duration, setDuration] = useState(0)
+        useEffect(() => {
+            if (audioPlayer.current) {
+                const onTimeUpdate = () => {
+                    setCurrentTime(audioPlayer.current?.currentTime ?? 0)
+                }
+                audioPlayer.current.addEventListener('timeupdate', onTimeUpdate)
+                const onDurationChange = () => {
+                    setDuration(audioPlayer.current?.duration ?? 0)
+                }
+                audioPlayer.current.addEventListener('durationchange', onDurationChange)
+                return () => {
+                    audioPlayer.current?.removeEventListener('timeupdate', onTimeUpdate)
+                    audioPlayer.current?.removeEventListener('durationchange', onDurationChange)
+                }
+            }
+        }, [audioPlayer])
 
         const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
 
@@ -153,40 +170,58 @@ export function MonthArtist() {
                     ))}
                 </div>
                     {showDiv && (
-                        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex justify-around p-2 items-center">
-                            <div className="flex justify-start items-start w-96">
-                                <div>
-                                    <img
-                                        className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
-                                        src={image} 
-                                    />
-                                </div>
-                                <div className="sm:pl-5 pl-2 flex flex-col justify-center">
-                                    <p className="font-bold 2xl:text-lg sm:text-base text-sm">{music}</p>
-                                    <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50">{album}</p>
-                                </div>
-                            </div> 
-                            <div >
-                                <audio ref={audioPlayer} src={urlMusic} autoPlay onLoadedData={
-                                    () => {
-                                        if (audioPlayer.current) {
-                                            setIsPlaying(!audioPlayer.current.paused)
-                                            audioPlayer.current.volume = .25
+                        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex p-2 items-center flex-col">
+                            <div className="flex sm:justify-between sm:w-3/5 justify-around w-full">
+                                <div className="flex items-center w-96">
+                                    <div>
+                                        <img
+                                            className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
+                                            src={image} 
+                                        />
+                                    </div>
+                                    <div className="sm:pl-5 pl-2 flex flex-col justify-center">
+                                        <p className="font-bold 2xl:text-lg sm:text-base text-sm">{music}</p>
+                                        <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50">{album}</p>
+                                    </div>
+                                </div> 
+                                <div className="flex items-center">
+                                    <audio ref={audioPlayer} src={urlMusic} autoPlay onLoadedData={
+                                        () => {
+                                            if (audioPlayer.current) {
+                                                setIsPlaying(!audioPlayer.current.paused)
+                                                audioPlayer.current.volume = .25
+                                            }
                                         }
-                                    }
-                                }>
-                                </audio>
-                                <div className="flex justify-around text-2xl my-auto">
-                                    <button onClick={previous}>
-                                        <SkipBack className="mx-2"/>
-                                    </button>
-                                    <button onClick={toggleAudio}>
-                                        {!isPlaying ? <Play className="mx-2" /> : <Pause className="mx-2"/>}
-                                    </button>
-                                    <button onClick={next}>
-                                        <SkipForward className="mx-2"/>
-                                    </button>
+                                    }>
+                                    </audio>
+                                    <div className="flex text-2xl">
+                                        <button onClick={previous}>
+                                            <SkipBack className="mx-2"/>
+                                        </button>
+                                        <button onClick={toggleAudio}>
+                                            {!isPlaying ? <Play className="mx-2" /> : <Pause className="mx-2"/>}
+                                        </button>
+                                        <button onClick={next}>
+                                            <SkipForward className="mx-2"/>
+                                        </button>
+                                    </div>
                                 </div>
+                            </div>
+                            <div className="flex flex-col justify-around sm:w-3/5 w-full mt-2 bg-red-300">
+                            <input
+                                className="appearance-none w-full h-2 bg-gray-300 overflow-hidden"
+                                type="range"
+                                defaultValue="0"
+                                value={currentTime}
+                                min="0"
+                                max={audioPlayer.current?.duration ?? duration}
+                                step="0.001"
+                                onChange={(event) => {
+                                    if (audioPlayer.current) {
+                                    audioPlayer.current.currentTime = event.target.valueAsNumber
+                                    }
+                                }}
+                            />
                             </div>
                         </div>
                     )}
