@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        greenButton: '#1ED760',
+        green: '#1ED760',
         textHeader: '#1E1E1E',
         bgFooter: '#171A20',
         bgMain: '#111112'
@@ -27,7 +27,7 @@ module.exports = {
       screens: {
         xxl : '1410px',
         smm: '400px'
-      }
+      },
     },
   },
   plugins: [],
