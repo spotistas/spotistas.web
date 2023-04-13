@@ -1,3 +1,4 @@
+import { DayMusic } from "../components/DayMusic";
 import { Header } from "../components/Header";
 import { Login } from "../components/Login";
 import { MonthArtist } from "../components/MonthArtist";
@@ -29,8 +30,9 @@ export function Home() {
 			</div>
 			<div className="md:mx-10">
 				<div className="md:mt-40 mt-10 flex mx-auto md:max-w-[1440px] max-w-[600px] flex-wrap justify-center">
-					<div className=" pb-10">
+					<div className=" pb-10 flex ">
 						<MonthArtist/>
+						<DayMusic/>
 					</div>
 					<div className="pb-10">
 					</div>
