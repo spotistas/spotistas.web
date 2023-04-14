@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { CSSProperties, useEffect, useState } from 'react'
 import axios from 'axios'
 import {
@@ -248,6 +249,7 @@ export function MonthArtist() {
                     <img
                       className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
                       src={image}
+                      alt="image"
                     />
                   </div>
                   <div className="sm:pl-5 pl-2 flex flex-col justify-center">
