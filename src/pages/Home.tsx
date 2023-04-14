@@ -2,8 +2,10 @@ import { DayMusic } from '../components/DayMusic'
 import { Header } from '../components/Header'
 import { Login } from '../components/Login'
 import { MonthArtist } from '../components/MonthArtist'
+import { TopTrending } from '../components/TopTrending'
 
 export function Home() {
+  console.log(window.innerWidth)
   return (
     <div>
       <div className="sm:bg-home bg-homeMobile bg-cover bg-no-repeat bg-center">
@@ -26,15 +28,15 @@ export function Home() {
           </div>
         </div>
       </div>
-      <div className="md:mx-10">
-        <div className="md:mt-40 mt-10 flex mx-auto md:max-w-[1440px] max-w-[600px] flex-wrap justify-center">
-          <div className=" pb-10 flex ">
-            <MonthArtist />
-            <DayMusic />
-          </div>
-          <div className="pb-10"></div>
-        </div>
-      </div>
+      <main className="md:mt-40 mt-10 flex items-center justify-center lg:max-w-[1440px] max-w-[600px] flex-wrap gap-10 mx-auto my-5">
+        <section className="flex flex-col sm:flex-row justify-between w-full gap-7">
+          <MonthArtist />
+          <DayMusic />
+        </section>
+        <section className="flex flex-col sm:flex-row justify-between w-full">
+          <TopTrending />
+        </section>
+      </main>
     </div>
   )
 }

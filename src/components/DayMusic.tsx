@@ -28,7 +28,7 @@ export function DayMusic() {
   }, [])
 
   return (
-    <div className="2xl:w-[665px] sm:w-[550px] text-white smm:mx-5 rounded-3xl bg-[#171A20] overflow-hidden">
+    <div className="2xl:w-[665px] sm:w-[550px] text-white rounded-3xl bg-[#171A20] overflow-hidden">
       {musicDay === undefined ? (
         <Loading />
       ) : (
