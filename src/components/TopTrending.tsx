@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { getTopTrending, TopTrendingTypes } from '../services/api'
 
-export function TopTrending() {
+interface Props {
+  limit: number
+}
+
+export function TopTrending({ limit }: Props) {
   const [topTrendingSongs, setTopTrendingSongs] = useState<
     TopTrendingTypes[] | undefined
   >()
@@ -11,7 +15,7 @@ export function TopTrending() {
     setTopTrendingSongs(data)
   }
   useEffect(() => {
-    getTopTrendingData(10)
+    getTopTrendingData(limit)
   }, [])
   return (
     <div className="w-full flex flex-col items-center justify-center font-gotham text-white rounded-2xl bg-gradientTrending">
@@ -21,7 +25,7 @@ export function TopTrending() {
           Seu relatório diário das faixas mais tocadas no momento
         </h4>
       </section>
-      <section className="grid sm:grid-rows-5 md:grid-cols-2 p-16 gap-4">
+      <section className="grid sm:grid-rows-5 lg:grid-cols-2 p-16 gap-4">
         {topTrendingSongs &&
           topTrendingSongs.map((song) => {
             return (

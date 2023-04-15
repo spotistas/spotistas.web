@@ -5,7 +5,6 @@ import { MonthArtist } from '../components/MonthArtist'
 import { TopTrending } from '../components/TopTrending'
 
 export function Home() {
-  console.log(window.innerWidth)
   return (
     <div>
       <div className="sm:bg-home bg-homeMobile bg-cover bg-no-repeat bg-center">
@@ -29,12 +28,12 @@ export function Home() {
         </div>
       </div>
       <main className="md:mt-40 mt-10 flex items-center justify-center lg:max-w-[1440px] max-w-[600px] flex-wrap gap-10 mx-auto my-5">
-        <section className="flex flex-col sm:flex-row justify-between w-full gap-7">
+        <section className="flex flex-col sm:flex-row justify-between w-full gap-7 mx-10">
           <MonthArtist />
           <DayMusic />
         </section>
-        <section className="flex flex-col sm:flex-row justify-between w-full">
-          <TopTrending />
+        <section className="flex flex-col sm:flex-row justify-between w-full mx-10">
+          <TopTrending limit={window.innerWidth} />
         </section>
       </main>
     </div>
