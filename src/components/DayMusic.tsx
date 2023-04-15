@@ -62,7 +62,7 @@ export function DayMusic() {
               {musicDay.note}
             </p>
 
-            <div className="font-poppins font-bold text-xl leading-8 ">
+            <div className="font-poppins font-bold text-xl leading-8 pb-10">
               <span className="opacity-50">Album: </span>
               <span className="opacity-100">{musicDay.album.name}</span>
               <br></br>

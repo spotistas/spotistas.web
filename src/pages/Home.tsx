@@ -5,6 +5,7 @@ import { MonthArtist } from '../components/MonthArtist'
 import { TopTrending } from '../components/TopTrending'
 
 export function Home() {
+  console.log('oi')
   return (
     <div>
       <div className="sm:bg-home bg-homeMobile bg-cover bg-no-repeat bg-center">
@@ -33,7 +34,7 @@ export function Home() {
           <DayMusic />
         </section>
         <section className="flex flex-col sm:flex-row justify-between w-full mx-10">
-          <TopTrending limit={window.innerWidth} />
+          <TopTrending clientWidth={window.innerWidth} />
         </section>
       </main>
     </div>
