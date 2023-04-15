@@ -152,7 +152,7 @@ export function MonthArtist() {
   }
 
   return (
-    <div className="2xl:w-[665px] sm:w-[550px] text-white smm:mx-5">
+    <div className="2xl:w-[665px] sm:w-[550px] text-white">
       {Object.keys(monthArtist.image && monthArtist.name && monthArtist.tracks)
         .length === 0 ? (
         <div className="h-[875px] flex justify-center items-center">
