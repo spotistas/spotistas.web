@@ -5,7 +5,6 @@ import { MonthArtist } from '../components/MonthArtist'
 import { TopTrending } from '../components/TopTrending'
 
 export function Home() {
-  console.log('oi')
   return (
     <div>
       <div className="sm:bg-home bg-homeMobile bg-cover bg-no-repeat bg-center">
