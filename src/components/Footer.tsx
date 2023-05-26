@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Logo from '../assets/logo.png'
 
 export function Footer() {
@@ -20,7 +21,7 @@ export function Footer() {
         </div>
         <div className="font-bold text-right max-sm:text-center max-sm:mt-5">
           <p>
-            <a href="#">Política de Privacidade</a>
+            <Link to={'/privacy'}>Política de Privacidade</Link>
           </p>
           <p>
             <a href="#">Contato</a>

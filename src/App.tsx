@@ -1,12 +1,10 @@
-import { Footer } from './components/Footer'
-import { Home } from './pages/Home'
+import { Routes } from './routes'
 import './styles/global.css'
 
 function App() {
   return (
     <div>
-      <Home />
-      <Footer />
+      <Routes />
     </div>
   )
 }
