@@ -152,12 +152,12 @@ export function MonthArtist() {
   }
 
   return (
-    <div className="2xl:w-[665px] sm:w-[550px] text-white">
+    <div className="text-white sm:w-[550px] 2xl:w-[665px]">
       {Object.keys(monthArtist.image && monthArtist.name && monthArtist.tracks)
         .length === 0 ? (
-        <div className="h-[875px] flex justify-center items-center">
+        <div className="flex h-[875px] items-center justify-center">
           <CircleNotch
-            className="animate-spin text-greenButton"
+            className="text-greenButton animate-spin"
             size={32}
             weight="bold"
           />
@@ -165,19 +165,19 @@ export function MonthArtist() {
       ) : (
         <div>
           <div
-            className="rounded-t-3xl pt-32 md:pb-9 pb-5 md:pl-7 pl-5 bg-center bg-no-repeat bg-cover"
+            className="rounded-t-3xl bg-cover bg-center bg-no-repeat pt-32 pb-5 pl-5 md:pb-9 md:pl-7"
             style={{
               backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(${monthArtist.image})`,
             }}
           >
-            <p className="font-medium md:text-2xl text-xl">Artista do Mês</p>
-            <p className="font-bold md:text-5xl text-4xl">{monthArtist.name}</p>
+            <p className="text-xl font-medium md:text-2xl">Artista do Mês</p>
+            <p className="text-4xl font-bold md:text-5xl">{monthArtist.name}</p>
           </div>
-          <div className="bg-gradientGrid rounded-b-3xl pb-11">
+          <div className="rounded-b-3xl bg-gradientGrid pb-11">
             {monthArtist.tracks.map((tracks, index) => (
               <div
                 key={index}
-                className="flex pt-10 2xl:pl-20 sm:pl-8  pl-4 max-2xl:pr-8"
+                className="flex pt-10 pl-4 max-2xl:pr-8  sm:pl-8 2xl:pl-20"
               >
                 <div>
                   {tracks.preview_url?.length > 0 ? (
@@ -195,7 +195,7 @@ export function MonthArtist() {
                     >
                       <div className="relative">
                         <img
-                          className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto w-full h-auto"
+                          className="m-auto flex h-auto max-h-[50px] w-full max-w-[50px] justify-center rounded-xl sm:max-h-[77px] sm:max-w-[77px]"
                           src={tracks.image}
                           alt="music album image"
                         />
@@ -204,17 +204,17 @@ export function MonthArtist() {
                             <div>
                               {!isPlaying ? (
                                 <div
-                                  className={`absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat`}
+                                  className={`z-7 absolute inset-0 bg-center bg-no-repeat hover:bg-play`}
                                 ></div>
                               ) : (
                                 <div
-                                  className={`absolute inset-0 z-7 hover:bg-pause bg-center bg-no-repeat`}
+                                  className={`z-7 absolute inset-0 bg-center bg-no-repeat hover:bg-pause`}
                                 ></div>
                               )}
                             </div>
                           ) : (
                             <div
-                              className={`absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat`}
+                              className={`z-7 absolute inset-0 bg-center bg-no-repeat hover:bg-play`}
                             ></div>
                           )}
                         </div>
@@ -223,18 +223,18 @@ export function MonthArtist() {
                   ) : (
                     <div>
                       <img
-                        className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto w-full h-auto"
+                        className="m-auto flex h-auto max-h-[50px] w-full max-w-[50px] justify-center rounded-xl sm:max-h-[77px] sm:max-w-[77px]"
                         src={tracks.image}
                         alt="music album image"
                       />
                     </div>
                   )}
                 </div>
-                <div className="sm:pl-5 pl-2 flex flex-col justify-center ">
-                  <p className="font-bold 2xl:text-3xl sm:text-lg text-sm">
+                <div className="flex flex-col justify-center pl-2 sm:pl-5 ">
+                  <p className="text-sm font-bold sm:text-lg 2xl:text-3xl">
                     {tracks.name}
                   </p>
-                  <p className="font-bold 2xl:text-2xl sm:text-base text-xs opacity-50">
+                  <p className="text-xs font-bold opacity-50 sm:text-base 2xl:text-2xl">
                     {tracks.album.name}
                   </p>
                 </div>
@@ -242,27 +242,27 @@ export function MonthArtist() {
             ))}
           </div>
           {showDiv && (
-            <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex p-2 items-center flex-col">
-              <div className="flex sm:justify-between sm:w-3/5 justify-around w-full">
-                <div className="flex items-center w-96">
+            <div className=" fixed bottom-0 right-0 flex w-full flex-col items-center bg-black bg-opacity-50 p-2">
+              <div className="flex w-full justify-around sm:w-3/5 sm:justify-between">
+                <div className="flex w-96 items-center">
                   <div>
                     <img
-                      className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
+                      className="m-auto flex max-h-[35px] max-w-[35px] justify-center rounded-full"
                       src={image}
                       alt="image"
                     />
                   </div>
-                  <div className="sm:pl-5 pl-2 flex flex-col justify-center">
-                    <p className="font-bold 2xl:text-lg sm:text-base text-sm max-smm:hidden">
+                  <div className="flex flex-col justify-center pl-2 sm:pl-5">
+                    <p className="text-sm font-bold max-smm:hidden sm:text-base 2xl:text-lg">
                       {music}
                     </p>
-                    <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50 max-smm:hidden">
+                    <p className="text-xs font-bold opacity-50 max-smm:hidden sm:text-sm 2xl:text-base">
                       {album}
                     </p>
-                    <p className="font-bold 2xl:text-lg sm:text-base text-sm smm:hidden">
+                    <p className="text-sm font-bold smm:hidden sm:text-base 2xl:text-lg">
                       {music.slice(0, 14) + '...'}
                     </p>
-                    <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50 smm:hidden">
+                    <p className="text-xs font-bold opacity-50 smm:hidden sm:text-sm 2xl:text-base">
                       {album.slice(0, 14) + '...'}
                     </p>
                   </div>
@@ -279,7 +279,7 @@ export function MonthArtist() {
                       }
                     }}
                   ></audio>
-                  <div className="flex smm:text-2xl text-base">
+                  <div className="flex text-base smm:text-2xl">
                     <button onClick={previous}>
                       <SkipBack className="mx-2" />
                     </button>
@@ -299,9 +299,9 @@ export function MonthArtist() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col justify-around sm:w-3/5 w-full mt-2">
+              <div className="mt-2 flex w-full flex-col justify-around sm:w-3/5">
                 <input
-                  className="appearance-none w-full bg-gray-300 overflow-hidden range-input shadow-lg"
+                  className="range-input w-full appearance-none overflow-hidden bg-gray-300 shadow-lg"
                   type="range"
                   defaultValue="0"
                   value={currentTime}
@@ -321,7 +321,7 @@ export function MonthArtist() {
                   }}
                 />
               </div>
-              <div className="smm:absolute smm:top-2 smm:right-5 smm:text-2xl max-sm:hidden">
+              <div className="max-sm:hidden smm:absolute smm:top-2 smm:right-5 smm:text-2xl">
                 <button onClick={close}>
                   <XCircle size={32} />
                 </button>

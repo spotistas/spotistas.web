@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from 'react'
-import { getTopTrending, TopTrendingTypes } from '../services/api'
+import { getTopTrending } from '../services/api'
+import { TopTrendingTypes } from '../services/types'
 
 interface Props {
   clientWidth: number
@@ -24,14 +25,14 @@ export function TopTrending({ clientWidth }: Props) {
     getTopTrendingData(limit)
   }, [])
   return (
-    <div className="w-full flex flex-col items-center justify-center font-gotham text-white rounded-2xl bg-gradientTrending">
-      <section className="font-gotham flex flex-col items-center gap-6 mt-16 font-bold text-center">
+    <div className="flex w-full flex-col items-center justify-center rounded-2xl bg-gradientTrending font-gotham text-white">
+      <section className="mt-16 flex flex-col items-center gap-6 text-center font-gotham font-bold">
         <h2 className="text-5xl">Top {limit} Brasil</h2>
-        <h4 className="text-2xl opacity-50 text-center">
+        <h4 className="text-center text-2xl opacity-50">
           Seu relatório diário das faixas mais tocadas no momento
         </h4>
       </section>
-      <section className=" grid grid-cols-2 gap-x-20 gap-y-4 -mr-9 p-16">
+      <section className=" -mr-9 grid grid-cols-2 gap-x-20 gap-y-4 p-16">
         {topTrendingSongs &&
           topTrendingSongs.map((song) => {
             const regex = /\s*\(.*\)|\s*-.* /g
@@ -41,7 +42,7 @@ export function TopTrending({ clientWidth }: Props) {
             return (
               <div
                 key={song.id}
-                className="flex gap-5 items-center max-w-[496px] flex-grow flex-shrink"
+                className="flex max-w-[496px] flex-shrink flex-grow items-center gap-5"
               >
                 <img
                   src={song.image}

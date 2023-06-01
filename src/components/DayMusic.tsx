@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
-import { getMusicDay, DayMusicProps } from '../services/api'
+import { getMusicDay } from '../services/api'
+import { DayMusicProps } from '../services/types'
 import { Loading } from './Loading'
 
 export function DayMusic() {
@@ -28,20 +29,20 @@ export function DayMusic() {
   }, [])
 
   return (
-    <div className="2xl:w-[665px] sm:w-[550px] text-white rounded-3xl bg-[#171A20] overflow-hidden">
+    <div className="overflow-hidden rounded-3xl bg-[#171A20] text-white sm:w-[550px] 2xl:w-[665px]">
       {musicDay === undefined ? (
         <Loading />
       ) : (
         <div>
           <div
-            className=" h-96 bg-center relative"
+            className=" relative h-96 bg-center"
             style={{
               backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url(${musicDay.image})`,
             }}
           >
             <div className="absolute bottom-6 left-9">
-              <p className="font-medium md:text-2xl text-xl">Musica do Dia</p>
-              <p className="font-bold md:text-5xl text-4xl">{musicDay.name}</p>
+              <p className="text-xl font-medium md:text-2xl">Musica do Dia</p>
+              <p className="text-4xl font-bold md:text-5xl">{musicDay.name}</p>
             </div>
           </div>
           <div className="flex flex-col gap-10 px-9">
@@ -53,16 +54,16 @@ export function DayMusic() {
                 width={68}
                 className="rounded-full"
               />
-              <h1 className="font-bold text-2xl leading-7">
+              <h1 className="text-2xl font-bold leading-7">
                 {musicDay.artists[0].name}
               </h1>
             </div>
 
-            <p className="opacity-50 font-poppins font-bold text-xl leading-7 text-justify">
+            <p className="text-justify font-poppins text-xl font-bold leading-7 opacity-50">
               {musicDay.note}
             </p>
 
-            <div className="font-poppins font-bold text-xl leading-8 pb-10">
+            <div className="pb-10 font-poppins text-xl font-bold leading-8">
               <span className="opacity-50">Album: </span>
               <span className="opacity-100">{musicDay.album.name}</span>
               <br></br>

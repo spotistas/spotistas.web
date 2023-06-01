@@ -1,6 +1,6 @@
 import { api } from '../services/api'
 
-interface Props extends HTMLButtonElement {
+interface Props {
   buttonText: string
 }
 
@@ -11,7 +11,7 @@ export function Login({ buttonText }: Props) {
   }
   return (
     <button
-      className="bg-green md:text-base text-sm font-poppins font-medium md:px-12 md:py-4 px-10 py-3 rounded-full text-textHeader hover:brightness-105"
+      className="rounded-full bg-green px-10 py-3 font-poppins text-sm font-medium text-textHeader hover:brightness-105 md:px-12 md:py-4 md:text-base"
       onClick={handleLogin}
     >
       {buttonText}

@@ -5,7 +5,7 @@ export function PrivacyPolicy() {
   return (
     <>
       <Header />
-      <main className="px-11 py-28 flex flex-col gap-16">
+      <main className="flex flex-col gap-16 px-11 py-28">
         <SummaryCard
           title="Política de Privacidade"
           description="Bem-vindo(a) à nossa plataforma de dados do Spotify. A privacidade de nossos usuários é extremamente importante para nós e estamos comprometidos em proteger suas informações pessoais. Esta política de privacidade explica como coletamos, usamos e compartilhamos seus dados quando você usa nossa plataforma."
