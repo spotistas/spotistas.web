@@ -39,7 +39,7 @@ export interface TopTrendingTypes {
 }
 
 export const api = axios.create({
-  baseURL: 'https://spotistas.onrender.com',
+  baseURL: 'http://localhost:5001',
 })
 
 export async function getMusicDay() {
