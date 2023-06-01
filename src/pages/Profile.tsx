@@ -1,5 +1,4 @@
 import { Header } from '../components/Header'
-import { SectionProfile } from '../components/SectionProfile'
 import { useEffect, useState } from 'react'
 import {
   getUserInfo,
@@ -10,6 +9,7 @@ import {
 import { TopTrendingTypes, UserInfo } from '../services/types'
 import { CardProfile } from '../components/CardProfile'
 import { Loading } from '../components/Loading'
+import { SectionProfile } from '../components/SectionProfile'
 
 export function Me() {
   const [userTopTracks, setUserTopTracks] = useState<TopTrendingTypes>()
