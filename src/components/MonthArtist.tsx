@@ -40,7 +40,6 @@ export function MonthArtist() {
         'https://spotistas.onrender.com/artists/month',
       )
       const Artist = response.data
-      console.log(Artist)
       setMonthArtist(Artist)
     } catch (error) {
       console.log(error)
