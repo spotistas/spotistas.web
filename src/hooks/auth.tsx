@@ -6,24 +6,40 @@ import {
   useState,
 } from 'react'
 import { api } from '../services/api'
+import { UserInfo } from '../services/types'
 
-const AuthContext = createContext({})
+interface AuthContextValue {
+  isUserAuthenticated: boolean
+  userInfo?: UserInfo
+}
+
+const initialAuthContextValue: AuthContextValue = {
+  isUserAuthenticated: false,
+}
+
+const AuthContext = createContext<AuthContextValue>(initialAuthContextValue)
 
 interface AuthProviderProps {
   children: ReactNode
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState<boolean>(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | undefined>()
+  console.log(isUserAuthenticated)
+
   async function checkIfUserAuthenticated(): Promise<void> {
     try {
       const response = await api.get('/me')
+      console.log(response)
       if (response.status !== 200) {
         setIsUserAuthenticated(false)
+      } else {
+        setIsUserAuthenticated(true)
+        setUserInfo(response.data)
       }
-      setIsUserAuthenticated(true)
     } catch (error) {
-      setIsUserAuthenticated(false)
+      console.log(error)
     }
   }
 
@@ -32,13 +48,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [])
 
   return (
-    <AuthContext.Provider value={isUserAuthenticated}>
+    <AuthContext.Provider value={{ isUserAuthenticated, userInfo }}>
       {children}
     </AuthContext.Provider>
   )
 }
 
-export function useAuth() {
+export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth deve ser usado dentro do AuthProvider')
+  }
   return context
 }

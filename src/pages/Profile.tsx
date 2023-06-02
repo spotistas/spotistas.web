@@ -1,33 +1,31 @@
 import { Header } from '../components/Header'
 import { useEffect, useState } from 'react'
 import {
-  getUserInfo,
   getUserTopArtists,
   getUserTopGenres,
   getUserTopTracks,
 } from '../services/api'
-import { TopTrendingTypes, UserInfo } from '../services/types'
+import { TopTrendingTypes } from '../services/types'
 import { CardProfile } from '../components/CardProfile'
 import { Loading } from '../components/Loading'
 import { SectionProfile } from '../components/SectionProfile'
+import { useAuth } from '../hooks/auth'
 
-export function Me() {
+export function Profile() {
   const [userTopTracks, setUserTopTracks] = useState<TopTrendingTypes>()
-  const [userInfo, setUserInfo] = useState<UserInfo>()
   const [userArtists, setUserArtists] = useState()
   const [userTopGenres, setUserTopGenres] = useState()
   const [loading, setLoading] = useState(true)
+  const { userInfo } = useAuth()
 
   async function getAllPageData(): Promise<void> {
     setLoading(true)
     const responseUserTracks = await getUserTopTracks()
-    const responseUserInfo = await getUserInfo()
     const responseUserArtists = await getUserTopArtists()
     const responseUserGenres = await getUserTopGenres()
 
     setUserTopGenres(responseUserGenres)
     setUserArtists(responseUserArtists)
-    setUserInfo(responseUserInfo)
     setUserTopTracks(responseUserTracks)
     setLoading(false)
   }
@@ -57,7 +55,6 @@ export function Me() {
               </h1>
             </div>
           </div>
-
           <main className="my-20 flex flex-col gap-20 px-4 text-white md:my-36 md:px-11">
             {userTopTracks && (
               <>

@@ -27,11 +27,13 @@ export function CardProfile({ cardData }: any) {
               </span>
               {item.name ? (
                 <div className="flex items-center gap-4">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="min-w-[56px] max-w-[56px] rounded-lg md:max-w-[77px]"
-                  />
+                  <div className="h-[56px] w-[56px] overflow-hidden rounded-lg md:h-[77px] md:w-[77px]">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className=" h-full w-full"
+                    />
+                  </div>
 
                   <div>
                     <h1 className="truncate font-gotham text-xl font-bold md:text-3xl ">

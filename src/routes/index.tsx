@@ -5,10 +5,10 @@ import { Footer } from '../components/Footer'
 import { useAuth } from '../hooks/auth'
 
 export function Routes() {
-  const isAuthenticated = useAuth()
+  const { isUserAuthenticated } = useAuth()
   return (
     <BrowserRouter>
-      {isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
+      {isUserAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
       <Footer />
     </BrowserRouter>
   )
