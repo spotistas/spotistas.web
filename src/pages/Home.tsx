@@ -27,13 +27,13 @@ export function Home() {
           </div>
         </div>
       </div>
-      <main className="mx-auto my-5 mt-10 flex max-w-[600px] flex-wrap items-center justify-center gap-10 md:mt-40 lg:max-w-[1440px]">
-        <section className="mx-10 flex w-full flex-col justify-between gap-7 sm:flex-row">
+      <main className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-10 px-4 py-11 md:mt-40 lg:max-w-[1440px]">
+        <section className=" flex w-full flex-col justify-between gap-7 sm:flex-row">
           <MonthArtist />
           <DayMusic />
         </section>
-        <section className="mx-10 flex w-full flex-col justify-between sm:flex-row">
-          <TopTrending clientWidth={window.innerWidth} />
+        <section className="flex w-full flex-col justify-between sm:flex-row">
+          <TopTrending />
         </section>
       </main>
     </div>
