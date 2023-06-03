@@ -61,14 +61,14 @@ export function CardProfile({ cardData }: any) {
       {!showAllItems ? (
         <button
           onClick={handleShowMore}
-          className="w-full p-7 text-center font-gotham text-2xl font-bold text-green hover:brightness-50 md:p-10 md:text-3xl"
+          className="w-full text-center font-gotham text-2xl font-bold text-green hover:brightness-50 md:p-10 md:text-3xl"
         >
           Ver mais
         </button>
       ) : (
         <button
           onClick={handleShowLess}
-          className="w-full p-7 text-center font-gotham text-2xl font-bold text-green hover:brightness-50
+          className="w-full text-center font-gotham text-2xl font-bold text-green hover:brightness-50
           md:p-10 md:text-3xl"
         >
           Ver menos

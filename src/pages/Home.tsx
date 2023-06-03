@@ -1,10 +1,30 @@
+import { useEffect, useState } from 'react'
+import { CardSectionHorizontal } from '../components/CardSectionHorizontal'
 import { DayMusic } from '../components/DayMusic'
 import { Header } from '../components/Header'
 import { Login } from '../components/Login'
 import { MonthArtist } from '../components/MonthArtist'
+import { OurPlaylists } from '../components/OurPlaylists'
 import { TopTrending } from '../components/TopTrending'
+import { getOurPlaylists, getTopTrending } from '../services/api'
+import { Playlist, TopTrendingTypes } from '../services/types'
 
 export function Home() {
+  const [ourPlaylistsData, setOurPlaylistsData] = useState<Playlist[]>()
+  const [topTrendingSongs, setTopTrendingSongs] = useState<
+    TopTrendingTypes[] | undefined
+  >()
+
+  async function getPageData(): Promise<void> {
+    const playlistsDataResponse = await getOurPlaylists()
+    const topBrasilDataResponse = await getTopTrending(10)
+    setTopTrendingSongs(topBrasilDataResponse)
+    setOurPlaylistsData(playlistsDataResponse)
+  }
+
+  useEffect(() => {
+    getPageData()
+  }, [])
   return (
     <div>
       <div className="bg-homeMobile bg-cover bg-center bg-no-repeat sm:bg-home">
@@ -32,8 +52,13 @@ export function Home() {
           <MonthArtist />
           <DayMusic />
         </section>
-        <section className="flex w-full flex-col justify-between sm:flex-row">
-          <TopTrending />
+        <section className="w-full space-y-7">
+          <CardSectionHorizontal>
+            <TopTrending data={topTrendingSongs} />
+          </CardSectionHorizontal>
+          <CardSectionHorizontal>
+            {ourPlaylistsData && <OurPlaylists data={ourPlaylistsData} />}
+          </CardSectionHorizontal>
         </section>
       </main>
     </div>

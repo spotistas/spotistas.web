@@ -1,27 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from 'react'
-import { getTopTrending } from '../services/api'
 import { TopTrendingTypes } from '../services/types'
-
-export function TopTrending() {
-  const [topTrendingSongs, setTopTrendingSongs] = useState<
-    TopTrendingTypes[] | undefined
-  >()
+interface TopTrendingProps {
+  data: TopTrendingTypes[] | undefined
+}
+export function TopTrending({ data }: TopTrendingProps) {
   const [isLargeScreen, setIsLargeScreen] = useState(false)
-
-  async function getTopTrendingData() {
-    const data = await getTopTrending(10)
-
-    setTopTrendingSongs(data)
-  }
 
   function handleResize() {
     setIsLargeScreen(window.innerWidth >= 768)
-    console.log(`resizing to ${window.innerWidth}`)
   }
   useEffect(() => {
-    getTopTrendingData()
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => {
@@ -29,7 +19,7 @@ export function TopTrending() {
     }
   }, [])
   return (
-    <div className="flex w-full flex-col items-center justify-center rounded-[20px] bg-gradientTrending px-5 py-10 font-gotham text-white md:items-start md:bg-bgFooter md:bg-none md:py-9 md:px-9">
+    <div className=" w-full ">
       <section className=" flex flex-col gap-4 text-center font-gotham font-bold md:text-left">
         <h2 className="text-4xl md:hidden">Top 5 Brasil</h2>
         <h2 className="hidden text-5xl md:block">Top Brasil</h2>
@@ -37,43 +27,40 @@ export function TopTrending() {
           Seu relatório diário das faixas mais tocadas no momento
         </h4>
       </section>
-      <section className="no-scrollbar flex w-full flex-col gap-4 overflow-x-scroll px-4 py-8 md:flex-row md:px-0">
-        {topTrendingSongs &&
-          topTrendingSongs
-            .slice(0, isLargeScreen ? 10 : 5)
-            .map((song, index) => {
-              const regex = /\s*\(.*\)|\s*-.* /g
-              const albumNameFormated = song.album.name.replace(regex, '')
-              const songNameFormated = song.name.split('-')
+      <section className="no-scrollbar flex w-full flex-col gap-4 overflow-y-hidden overflow-x-scroll px-4 pt-8 md:flex-row md:px-0">
+        {data &&
+          data.slice(0, isLargeScreen ? 10 : 5).map((song, index) => {
+            const regex = /\s*\(.*\)|\s*-.* /g
+            const songNameFormated = song.name.split('-')
 
-              return (
-                <div
-                  key={song.id}
-                  className="flex items-center gap-2 md:min-w-max md:flex-col md:items-start "
-                >
-                  <img
-                    src={song.image}
-                    alt={song.album.name}
-                    height={isLargeScreen ? 264 : 78}
-                    width={isLargeScreen ? 264 : 78}
-                    className="rounded-[10px]"
-                  />
-                  <div className="font-bold md:flex md:items-center md:gap-4">
-                    <div className="hidden text-7xl font-bold text-[#888] md:block">
-                      <span>{index + 1}</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl">
-                        {songNameFormated[0].replace(regex, '')}
-                      </h3>
-                      <h4 className="text-lg opacity-50">
-                        {albumNameFormated}
-                      </h4>
-                    </div>
+            return (
+              <div
+                key={song.id}
+                className="flex items-center gap-2 md:min-w-max md:flex-col md:items-start "
+              >
+                <img
+                  src={song.image}
+                  alt={song.album.name}
+                  height={isLargeScreen ? 264 : 78}
+                  width={isLargeScreen ? 264 : 78}
+                  className="rounded-[10px]"
+                />
+                <div className="font-bold md:flex md:items-center md:gap-4">
+                  <div className="hidden text-7xl font-bold text-[#888] md:block">
+                    <span>{index + 1}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl">
+                      {songNameFormated[0].replace(regex, '')}
+                    </h3>
+                    <h4 className="text-lg opacity-50">
+                      {song.artists[0].name}
+                    </h4>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+            )
+          })}
       </section>
     </div>
   )

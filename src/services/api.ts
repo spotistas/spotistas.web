@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { DayMusicProps, TopTrendingTypes, UserInfo } from './types'
+import { DayMusicProps, Playlist, TopTrendingTypes, UserInfo } from './types'
 
 export const api: AxiosInstance = axios.create({
   baseURL: 'http://localhost:5001',
@@ -49,7 +49,10 @@ export async function getUserTopGenres() {
   const { data } = await api.get('/me/top/genres')
   return data
 }
-
+export async function getOurPlaylists(): Promise<Playlist[]> {
+  const response = await api.get('/playlists')
+  return response.data
+}
 export async function getMainPageData() {
   const endpoints = [
     '/me/top/genres',

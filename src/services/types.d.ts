@@ -52,3 +52,11 @@ export interface UserInfo {
   country: string
   product: string
 }
+
+export interface Playlist {
+  id: string
+  name: string
+  image: string
+  description: string
+  external_url: string
+}
