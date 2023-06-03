@@ -22,11 +22,8 @@ export function TopTrending() {
   }
   useEffect(() => {
     getTopTrendingData()
-
     handleResize()
-
     window.addEventListener('resize', handleResize)
-
     return () => {
       window.removeEventListener('resize', handleResize)
     }
