@@ -5,7 +5,7 @@ export function PrivacyPolicy() {
   return (
     <>
       <Header />
-      <main className="flex flex-col gap-16 px-11 py-28">
+      <main className="flex flex-col gap-16 px-4 py-16 md:py-28 md:px-11">
         <SummaryCard
           key="5"
           title="Política de Privacidade"

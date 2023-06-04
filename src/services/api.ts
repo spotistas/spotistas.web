@@ -54,12 +54,7 @@ export async function getOurPlaylists(): Promise<Playlist[]> {
   return response.data
 }
 export async function getMainPageData() {
-  const endpoints = [
-    '/me/top/genres',
-    '/me/top/tracks',
-    '/me/top/artists',
-    '/me',
-  ]
+  const endpoints = ['/me/top/genres', '/me/top/tracks', '/me/top/artists']
   try {
     const requests = endpoints.map((endpoint) => api.get(endpoint))
     const responses = await Promise.all(requests)

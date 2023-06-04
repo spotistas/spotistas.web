@@ -55,11 +55,11 @@ export function DayMusic({ data }: props) {
               </h1>
             </div>
 
-            <p className="text-justify font-poppins text-xl font-bold leading-7 opacity-50">
+            <p className="text-justify font-poppins font-bold leading-7 opacity-50 md:text-xl">
               {data.note}
             </p>
 
-            <div className="pb-10 font-poppins text-xl font-bold leading-8">
+            <div className="pb-10 font-poppins font-bold leading-8 md:text-xl">
               <span className="opacity-50">Album: </span>
               <span className="opacity-100">{data.album.name}</span>
               <br></br>

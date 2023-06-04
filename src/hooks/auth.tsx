@@ -32,7 +32,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function checkIfUserAuthenticated(): Promise<void> {
     try {
       const response = await api.get('/me')
-
       setIsUserAuthenticated(true)
       setUserInfo(response.data)
     } catch (error) {

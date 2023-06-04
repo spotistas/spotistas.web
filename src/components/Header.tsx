@@ -5,10 +5,8 @@ import { useAuth } from '../hooks/auth'
 import { useEffect } from 'react'
 
 export function Header() {
-  const { isUserAuthenticated, checkUser } = useAuth()
-  useEffect(() => {
-    checkUser()
-  })
+  const { isUserAuthenticated } = useAuth()
+  useEffect(() => {})
 
   return (
     <div className="flex justify-center px-11 py-3 text-textHeader sm:justify-between sm:py-6">

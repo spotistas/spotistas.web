@@ -15,7 +15,7 @@ export function CardProfile({ cardData }: any) {
 
   return (
     <div className=" w-full rounded-lg bg-bgFooter">
-      <ul className="p-4 md:px-28 md:py-10">
+      <ul className="px-4 pt-4 md:px-28 md:pt-10">
         {cardData.slice(0, visibleItems).map((item: any, index: number) => (
           <li
             key={index}
@@ -61,7 +61,7 @@ export function CardProfile({ cardData }: any) {
       {!showAllItems ? (
         <button
           onClick={handleShowMore}
-          className="w-full text-center font-gotham text-2xl font-bold text-green hover:brightness-50 md:p-10 md:text-3xl"
+          className="w-full p-6 text-center font-gotham text-2xl font-bold text-green hover:brightness-50 md:p-10 md:text-3xl"
         >
           Ver mais
         </button>

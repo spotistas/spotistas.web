@@ -21,7 +21,7 @@ export function Settings() {
           </h1>
         </div>
       </div>
-      <main className="my-32 flex flex-col gap-16 px-4 md:mt-[262px] md:flex-row md:justify-center md:gap-5">
+      <main className="my-32 flex flex-col items-center gap-16 px-4 md:mt-[262px] md:justify-center md:gap-5 lg:flex-row">
         <CardSettings
           key={1}
           title="Configurar conta no Spotify"
