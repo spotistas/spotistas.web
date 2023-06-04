@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/auth'
 
 export function Routes() {
   const { isUserAuthenticated } = useAuth()
+
   return (
     <BrowserRouter>
       {isUserAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}

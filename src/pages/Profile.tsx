@@ -5,32 +5,44 @@ import {
   getUserTopGenres,
   getUserTopTracks,
 } from '../services/api'
-import { TopTrendingTypes } from '../services/types'
+import { TopArtistAuth, TopTrendingTypes } from '../services/types'
 import { CardProfile } from '../components/CardProfile'
 import { Loading } from '../components/Loading'
 import { SectionProfile } from '../components/SectionProfile'
 import { useAuth } from '../hooks/auth'
+interface ProfileData {
+  userTopTracks: TopTrendingTypes | null
+  userTopArtists: TopArtistAuth[] | null
+  userTopGenres: string[] | null
+}
 
 export function Profile() {
-  const [userTopTracks, setUserTopTracks] = useState<TopTrendingTypes>()
-  const [userArtists, setUserArtists] = useState()
-  const [userTopGenres, setUserTopGenres] = useState()
+  const [profileData, setProfileData] = useState<ProfileData>({
+    userTopTracks: null,
+    userTopArtists: null,
+    userTopGenres: null,
+  })
   const [loading, setLoading] = useState(true)
   const { userInfo } = useAuth()
 
-  async function getAllPageData(): Promise<void> {
+  async function getPageData(): Promise<void> {
     setLoading(true)
-    const responseUserTracks = await getUserTopTracks()
-    const responseUserArtists = await getUserTopArtists()
-    const responseUserGenres = await getUserTopGenres()
+    const [userTracks, userArtists, userGenres] = await Promise.all([
+      getUserTopTracks(),
+      getUserTopArtists(),
+      getUserTopGenres(),
+    ])
 
-    setUserTopGenres(responseUserGenres)
-    setUserArtists(responseUserArtists)
-    setUserTopTracks(responseUserTracks)
+    setProfileData({
+      userTopTracks: userTracks,
+      userTopArtists: userArtists,
+      userTopGenres: userGenres,
+    })
     setLoading(false)
   }
+
   useEffect(() => {
-    getAllPageData()
+    getPageData()
   }, [])
 
   return (
@@ -56,16 +68,16 @@ export function Profile() {
             </div>
           </div>
           <main className="my-20 flex flex-col gap-20 px-4 text-white md:my-36 md:px-11">
-            {userTopTracks && (
+            {profileData && (
               <>
                 <SectionProfile title="Top Músicas">
-                  <CardProfile cardData={userTopTracks} />
+                  <CardProfile cardData={profileData.userTopTracks} />
                 </SectionProfile>
                 <SectionProfile title="Top Artistas">
-                  <CardProfile cardData={userArtists} />
+                  <CardProfile cardData={profileData.userTopArtists} />
                 </SectionProfile>
                 <SectionProfile title="Top Gêneros">
-                  <CardProfile cardData={userTopGenres} />
+                  <CardProfile cardData={profileData.userTopGenres} />
                 </SectionProfile>
               </>
             )}

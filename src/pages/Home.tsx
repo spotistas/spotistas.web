@@ -6,18 +6,19 @@ import { Login } from '../components/Login'
 import { MonthArtist } from '../components/MonthArtist'
 import { OurPlaylists } from '../components/OurPlaylists'
 import { TopTrending } from '../components/TopTrending'
-import { getOurPlaylists, getTopTrending } from '../services/api'
-import { Playlist, TopTrendingTypes } from '../services/types'
+import { getMusicDay, getOurPlaylists, getTopTrending } from '../services/api'
+import { Playlist, TopTrendingTypes, DayMusicProps } from '../services/types'
 
 export function Home() {
   const [ourPlaylistsData, setOurPlaylistsData] = useState<Playlist[]>()
-  const [topTrendingSongs, setTopTrendingSongs] = useState<
-    TopTrendingTypes[] | undefined
-  >()
+  const [topTrendingSongs, setTopTrendingSongs] = useState<TopTrendingTypes[]>()
+  const [musicDay, setMusicDay] = useState<DayMusicProps>()
 
   async function getPageData(): Promise<void> {
     const playlistsDataResponse = await getOurPlaylists()
     const topBrasilDataResponse = await getTopTrending(10)
+    const musicDayResponse = await getMusicDay()
+    setMusicDay(musicDayResponse)
     setTopTrendingSongs(topBrasilDataResponse)
     setOurPlaylistsData(playlistsDataResponse)
   }
@@ -50,7 +51,7 @@ export function Home() {
       <main className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-10 px-4 py-11 md:mt-40 lg:max-w-[1440px]">
         <section className=" flex w-full flex-col justify-between gap-7 sm:flex-row">
           <MonthArtist />
-          <DayMusic />
+          <DayMusic data={musicDay} />
         </section>
         <section className="w-full space-y-7">
           <CardSectionHorizontal>

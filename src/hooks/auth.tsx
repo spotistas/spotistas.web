@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useContext,
   useEffect,
@@ -11,10 +11,12 @@ import { UserInfo } from '../services/types'
 interface AuthContextValue {
   isUserAuthenticated: boolean
   userInfo?: UserInfo
+  checkUser: () => void
 }
 
 const initialAuthContextValue: AuthContextValue = {
   isUserAuthenticated: false,
+  checkUser: () => {},
 }
 
 const AuthContext = createContext<AuthContextValue>(initialAuthContextValue)
@@ -24,22 +26,17 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState<boolean>(false)
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo | undefined>()
-  console.log(isUserAuthenticated)
 
   async function checkIfUserAuthenticated(): Promise<void> {
     try {
       const response = await api.get('/me')
-      console.log(response)
-      if (response.status !== 200) {
-        setIsUserAuthenticated(false)
-      } else {
-        setIsUserAuthenticated(true)
-        setUserInfo(response.data)
-      }
+
+      setIsUserAuthenticated(true)
+      setUserInfo(response.data)
     } catch (error) {
-      console.log(error)
+      setIsUserAuthenticated(false)
     }
   }
 
@@ -47,8 +44,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     checkIfUserAuthenticated()
   }, [])
 
+  const authContextValue: AuthContextValue = {
+    isUserAuthenticated,
+    userInfo,
+    checkUser: checkIfUserAuthenticated,
+  }
+
   return (
-    <AuthContext.Provider value={{ isUserAuthenticated, userInfo }}>
+    <AuthContext.Provider value={authContextValue}>
       {children}
     </AuthContext.Provider>
   )
