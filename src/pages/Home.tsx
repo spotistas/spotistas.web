@@ -51,7 +51,7 @@ export function Home() {
       <main className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-10 px-4 py-11 md:mt-40 lg:max-w-[1440px]">
         <section className=" flex w-full flex-col justify-between gap-7 sm:flex-row">
           <MonthArtist />
-          <DayMusic data={musicDay} />
+          {musicDay && <DayMusic data={musicDay} />}
         </section>
         <section className="w-full space-y-7">
           <CardSectionHorizontal>

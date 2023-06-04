@@ -13,7 +13,7 @@ export function Header() {
   return (
     <div className="flex justify-center px-11 py-3 text-textHeader sm:justify-between sm:py-6">
       <div>
-        <Link to={'/'} reloadDocument>
+        <Link to={'/'}>
           <img className="w-40" src={Logo} alt="logo image" />
         </Link>
       </div>

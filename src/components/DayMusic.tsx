@@ -4,7 +4,7 @@ import { Loading } from './Loading'
 import { DayMusicProps } from '../services/types'
 
 interface props {
-  data: DayMusicProps | undefined
+  data: DayMusicProps
 }
 
 export function DayMusic({ data }: props) {
@@ -21,8 +21,8 @@ export function DayMusic({ data }: props) {
   }
 
   useEffect(() => {
-    formatDate(data?.album.release_date)
-  }, [])
+    formatDate(data.album.release_date)
+  })
 
   return (
     <div className="overflow-hidden rounded-3xl bg-[#171A20] text-white sm:w-1/2 2xl:w-[665px]">
