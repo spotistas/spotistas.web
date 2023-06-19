@@ -1,60 +1,62 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useEffect, useState } from 'react'
-import { getTopTrending, TopTrendingTypes } from '../services/api'
-
-interface Props {
-  clientWidth: number
+import { TopTrendingTypes } from '../services/types'
+interface TopTrendingProps {
+  data: TopTrendingTypes[] | undefined
 }
+export function TopTrending({ data }: TopTrendingProps) {
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
 
-export function TopTrending({ clientWidth }: Props) {
-  const [topTrendingSongs, setTopTrendingSongs] = useState<
-    TopTrendingTypes[] | undefined
-  >()
-
-  let limit: number
-  clientWidth >= 1024 ? (limit = 10) : (limit = 5)
-
-  async function getTopTrendingData(limit: number) {
-    const data = await getTopTrending(limit)
-
-    setTopTrendingSongs(data)
+  function handleResize() {
+    setIsLargeScreen(window.innerWidth >= 768)
   }
   useEffect(() => {
-    getTopTrendingData(limit)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
   return (
-    <div className="w-full flex flex-col items-center justify-center font-gotham text-white rounded-2xl bg-gradientTrending">
-      <section className="font-gotham flex flex-col items-center gap-6 mt-16 font-bold text-center">
-        <h2 className="text-5xl">Top {limit} Brasil</h2>
-        <h4 className="text-2xl opacity-50 text-center">
+    <div className=" w-full ">
+      <section className=" flex flex-col gap-4 text-center font-gotham font-bold md:text-left">
+        <h2 className="text-4xl md:hidden">Top 5 Brasil</h2>
+        <h2 className="hidden text-5xl md:block">Top Brasil</h2>
+        <h4 className="text-center opacity-50 md:text-left md:text-2xl">
           Seu relatório diário das faixas mais tocadas no momento
         </h4>
       </section>
-      <section className=" grid grid-cols-2 gap-x-20 gap-y-4 -mr-9 p-16">
-        {topTrendingSongs &&
-          topTrendingSongs.map((song) => {
+      <section className="no-scrollbar flex w-full flex-col gap-4 overflow-y-hidden overflow-x-scroll px-4 pt-8 md:flex-row md:px-0">
+        {data &&
+          data.slice(0, isLargeScreen ? 10 : 5).map((song, index) => {
             const regex = /\s*\(.*\)|\s*-.* /g
-            const albumNameFormated = song.album.name.replace(regex, '')
             const songNameFormated = song.name.split('-')
 
             return (
               <div
                 key={song.id}
-                className="flex gap-5 items-center max-w-[496px] flex-grow flex-shrink"
+                className="flex items-center gap-2 md:min-w-max md:flex-col md:items-start "
               >
                 <img
                   src={song.image}
                   alt={song.album.name}
-                  height={78}
-                  width={78}
-                  className="rounded-xl"
+                  height={isLargeScreen ? 264 : 78}
+                  width={isLargeScreen ? 264 : 78}
+                  className="rounded-[10px]"
                 />
-                <div className="font-bold ">
-                  <h3 className="text-2xl">
-                    {songNameFormated[0].replace(regex, '')}
-                  </h3>
-                  <h4 className="text-xl opacity-50">{albumNameFormated}</h4>
+                <div className="font-bold md:flex md:items-center md:gap-4">
+                  <div className="hidden text-7xl font-bold text-[#888] md:block">
+                    <span>{index + 1}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl">
+                      {songNameFormated[0].replace(regex, '')}
+                    </h3>
+                    <h4 className="text-lg opacity-50">
+                      {song.artists[0].name}
+                    </h4>
+                  </div>
                 </div>
               </div>
             )

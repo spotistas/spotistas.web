@@ -8,14 +8,14 @@ export function SummaryCard({ title, description }: SummaryCardProps) {
 
   return (
     <article>
-      <h1 className="text-white font-gotham font-bold text-5xl mb-10">
+      <h1 className=" mb-10 text-center font-gotham text-2xl font-bold text-white md:text-left md:text-5xl">
         {title}
       </h1>
       {descriptionLines.map((line, index) => (
         <>
           <p
             key={index}
-            className="text-white/50 font-poppins font-medium text-xl "
+            className="font-poppins font-medium text-white/50 md:text-xl "
           >
             {line}
           </p>
