@@ -11,13 +11,11 @@ export function TopTrending({ clientWidth }: Props) {
   const [topTrendingSongs, setTopTrendingSongs] = useState<
     TopTrendingTypes[] | undefined
   >()
-
   let limit: number
   clientWidth >= 1024 ? (limit = 10) : (limit = 5)
-
+  console.log(topTrendingSongs)
   async function getTopTrendingData(limit: number) {
     const data = await getTopTrending(limit)
-
     setTopTrendingSongs(data)
   }
   useEffect(() => {
@@ -33,7 +31,7 @@ export function TopTrending({ clientWidth }: Props) {
       </section>
       <section className=" grid grid-cols-2 gap-x-20 gap-y-4 -mr-9 p-16">
         {topTrendingSongs &&
-          topTrendingSongs.map((song) => {
+          topTrendingSongs.tracks.map((song) => {
             const regex = /\s*\(.*\)|\s*-.* /g
             const albumNameFormated = song.album.name.replace(regex, '')
             const songNameFormated = song.name.split('-')

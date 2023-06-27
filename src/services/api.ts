@@ -1,5 +1,19 @@
 import axios from 'axios'
 
+export interface MonthArtistProps {
+  image: string
+  name: string
+  tracks: {
+    name: string
+    image: string
+    preview_url: string
+    album: {
+      name: string
+    }
+    index: number
+  }[]
+}
+
 export interface DayMusicProps {
   name: string
   image: string
@@ -39,8 +53,19 @@ export interface TopTrendingTypes {
 }
 
 export const api = axios.create({
-  baseURL: 'https://spotistas.onrender.com',
+  baseURL: 'https://spotistas.natanaelsc.xyz',
 })
+
+export async function getMonthArtist() {
+  try {
+    const response = await api.get('/artists/month')
+    console.log(response)
+    return response.data as MonthArtistProps
+  } catch (err) {
+    console.log(err)
+    return undefined
+  }
+}
 
 export async function getMusicDay() {
   try {
