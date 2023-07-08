@@ -1,11 +1,12 @@
 import { Routes } from './routes'
 import './styles/global.css'
+import { AuthProvider } from './hooks/auth'
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Routes />
-    </div>
+    </AuthProvider>
   )
 }
 

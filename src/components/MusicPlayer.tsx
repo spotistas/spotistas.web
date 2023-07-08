@@ -7,63 +7,68 @@ import {
   XCircle,
 } from '@phosphor-icons/react'
 
-export interface songsProps {
+export interface MusicPlayerProps {
   songs: {
-    tracks: {
+    name: string
+    image: string
+    preview_url: string
+    album: {
       name: string
-      image: string
-      preview_url: string
-      album: {
-        name: string
-      }
-      index: number
-    }[]
-  }
+    }
+    index: number
+  }[]
+  index: number
+  setIndex: (value: number) => void
+  isPlaying: boolean
+  setIsPlaying: (value: boolean) => void
 }
 
 interface RangeInputStyles extends CSSProperties {
   '--progress': string
 }
 
-export default function MusicPlayer({ songs }: songsProps) {
+export default function MusicPlayer({
+  songs,
+  index,
+  setIndex,
+  isPlaying,
+  setIsPlaying,
+}: MusicPlayerProps) {
   const audioPlayer: React.RefObject<HTMLAudioElement> = React.createRef()
-  const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-  const [showDiv, setShowDiv] = useState(false)
-  const [urlMusic, setUrlMusic] = useState('')
-  const [image, setImage] = useState('')
-  const [music, setMusic] = useState('')
-  const [album, setAlbum] = useState('')
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(-1)
+  const [music, setMusic] = useState({
+    urlMusic: '',
+    image: '',
+    music: '',
+    album: '',
+  })
   const previewMusic = (
     urlMusic: string,
     image: string,
     music: string,
     album: string,
-    index: number,
+    actuaIndex: number,
   ) => {
-    if (!showDiv && urlMusic.length > 0) {
-      setShowDiv(true)
-    } else if (urlMusic.length === 0) {
-      setShowDiv(false)
-    }
-    setUrlMusic(urlMusic)
-    setImage(image)
-    setMusic(music)
-    setAlbum(album)
-    setCurrentTrackIndex(index)
+    setMusic({
+      urlMusic,
+      image,
+      music,
+      album,
+    })
+    setCurrentTrackIndex(actuaIndex)
   }
-
   const close = () => {
-    setShowDiv(false)
+    setMusic({
+      urlMusic: '',
+      image: '',
+      music: '',
+      album: '',
+    })
+    setIsPlaying(false)
+    setCurrentTrackIndex(-1)
   }
-
-  useEffect(() => {
-    if (audioPlayer.current && !audioPlayer.current.paused) {
-      audioPlayer.current.pause()
-    }
-  }, [urlMusic])
 
   const toggleAudio = () => {
     if (audioPlayer.current) {
@@ -81,7 +86,17 @@ export default function MusicPlayer({ songs }: songsProps) {
     if (audioPlayer.current) {
       const onTimeUpdate = () => {
         setCurrentTime(audioPlayer.current?.currentTime ?? 0)
+        if (
+          audioPlayer.current?.currentTime !== undefined &&
+          audioPlayer.current?.duration !== undefined
+        ) {
+          if (audioPlayer.current.currentTime >= audioPlayer.current.duration) {
+            toggleAudio()
+            setIsPlaying(false)
+          }
+        }
       }
+
       audioPlayer.current.addEventListener('timeupdate', onTimeUpdate)
       const onDurationChange = () => {
         setDuration(audioPlayer.current?.duration ?? 0)
@@ -89,162 +104,132 @@ export default function MusicPlayer({ songs }: songsProps) {
       audioPlayer.current.addEventListener('durationchange', onDurationChange)
       return () => {
         audioPlayer.current?.removeEventListener('timeupdate', onTimeUpdate)
-        audioPlayer.current?.removeEventListener(
-          'durationchange',
-          onDurationChange,
-        )
+        audioPlayer.current?.removeEventListener('durationchange', onDurationChange)
       }
     }
   }, [audioPlayer])
 
-  const previous = () => {
-    const previousIndex = currentTrackIndex - 1
-    const previousTrack = songs.tracks[previousIndex]
-    previewMusic(
-      previousTrack.preview_url,
-      previousTrack.image,
-      previousTrack.name,
-      previousTrack.album.name,
-      previousTrack.index,
-    )
-    setCurrentTrackIndex(previousIndex)
+  useEffect(() => {
+    if (index !== currentTrackIndex && isPlaying === true) {
+      const { name, image, preview_url, album } = songs[index]
+      setMusic({
+        urlMusic: preview_url,
+        image,
+        music: name,
+        album: album.name,
+      })
+      setCurrentTrackIndex(index)
+    } else {
+      toggleAudio()
+    }
+  }, [isPlaying, index])
+
+  const previousTrack = () => {
+    let previousIndex = currentTrackIndex - 1
+    while (
+      previousIndex >= 0 &&
+      (!songs[previousIndex].preview_url ||
+        songs[previousIndex].preview_url.length === 0)
+    ) {
+      previousIndex--
+    }
+    if (previousIndex >= 0) {
+      const previousTrack = songs[previousIndex]
+      previewMusic(
+        previousTrack.preview_url,
+        previousTrack.image,
+        previousTrack.name,
+        previousTrack.album.name,
+        previousIndex,
+      )
+      setIsPlaying(true)
+      setCurrentTrackIndex(previousIndex)
+      setIndex(previousIndex)
+    }
   }
 
-  const next = () => {
-    const nextIndex = currentTrackIndex + 1
-    const nextTrack = songs.tracks[nextIndex]
-    previewMusic(
-      nextTrack.preview_url,
-      nextTrack.image,
-      nextTrack.name,
-      nextTrack.album.name,
-      nextTrack.index,
-    )
-    setCurrentTrackIndex(nextIndex)
+  const nextTrack = () => {
+    let nextIndex = currentTrackIndex + 1
+    while (
+      nextIndex < songs.length &&
+      (!songs[nextIndex].preview_url ||
+        songs[nextIndex].preview_url.length === 0)
+    ) {
+      nextIndex++
+    }
+    if (nextIndex < songs.length) {
+      const nextTrack = songs[nextIndex]
+      previewMusic(
+        nextTrack.preview_url,
+        nextTrack.image,
+        nextTrack.name,
+        nextTrack.album.name,
+        nextIndex,
+      )
+      setIsPlaying(true)
+      setCurrentTrackIndex(nextIndex)
+      setIndex(nextIndex)
+    }
   }
 
   return (
-    <div>
-      <div>
-        {songs.tracks.map((tracks, index) => (
-          <div
-            key={index}
-            className="flex pt-10 2xl:pl-20 sm:pl-8  pl-4 max-2xl:pr-8"
-          >
-            <div>
-              {tracks.preview_url?.length > 0 ? (
-                <div>
-                  <button
-                    onClick={() => {
-                      previewMusic(
-                        tracks.preview_url,
-                        tracks.image,
-                        tracks.name,
-                        tracks.album.name,
-                        index,
-                      )
-                      toggleAudio()
-                    }}
-                  >
-                    <div className="relative">
-                      <img
-                        className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto w-full h-auto"
-                        src={tracks.image}
-                        alt="music album image"
-                      />
-                      <div>
-                        {tracks.preview_url === urlMusic ? (
-                          <div>
-                            {!isPlaying ? (
-                              <div
-                                className={`absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat`}
-                              ></div>
-                            ) : (
-                              <div
-                                className={`absolute inset-0 z-7 hover:bg-pause bg-center bg-no-repeat`}
-                              ></div>
-                            )}
-                          </div>
-                        ) : (
-                          <div
-                            className={`absolute inset-0 z-7 hover:bg-play bg-center bg-no-repeat`}
-                          ></div>
-                        )}
-                      </div>
-                    </div>
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <img
-                    className="sm:max-w-[77px] max-w-[50px] sm:max-h-[77px] max-h-[50px] rounded-xl flex justify-center m-auto w-full h-auto"
-                    src={tracks.image}
-                    alt="music album image"
-                  />
-                </div>
-              )}
-            </div>
-            <div className="sm:pl-5 pl-2 flex flex-col justify-center ">
-              <p className="font-bold 2xl:text-3xl sm:text-lg text-sm">
-                {tracks.name}
-              </p>
-              <p className="font-bold 2xl:text-2xl sm:text-base text-xs opacity-50">
-                {tracks.album.name.slice(0, 14) + '...'}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-      {showDiv && (
-        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex p-2 items-center flex-col">
+    <>
+      {music.urlMusic && (
+        <div className=" bg-black w-full bg-opacity-50 fixed bottom-0 right-0 flex p-2 items-center flex-col z-10">
           <div className="flex sm:justify-between sm:w-3/5 justify-around w-full">
             <div className="flex items-center w-96">
               <div>
                 <img
                   className="max-w-[35px] max-h-[35px] rounded-full flex justify-center m-auto"
-                  src={image}
+                  src={music.image}
                   alt="image"
                 />
               </div>
               <div className="sm:pl-5 pl-2 flex flex-col justify-center">
                 <p className="font-bold 2xl:text-lg sm:text-base text-sm max-smm:hidden">
-                  {music}
+                  {music.music.slice(0, 34) + '...'}
                 </p>
                 <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50 max-smm:hidden">
-                  {album}
+                  {music.album.slice(0, 38) + '...'}
                 </p>
                 <p className="font-bold 2xl:text-lg sm:text-base text-sm smm:hidden">
-                  {music.slice(0, 14) + '...'}
+                  {music.music.slice(0, 13) + '...'}
                 </p>
                 <p className="font-bold 2xl:text-base sm:text-sm text-xs opacity-50 smm:hidden">
-                  {album.slice(0, 14) + '...'}
+                  {music.album.slice(0, 14) + '...'}
                 </p>
               </div>
             </div>
             <div className="flex items-center">
               <audio
                 ref={audioPlayer}
-                src={urlMusic}
+                src={music.urlMusic}
                 autoPlay
                 onLoadedData={() => {
                   if (audioPlayer.current) {
                     setIsPlaying(!audioPlayer.current.paused)
-                    audioPlayer.current.volume = 0.25
+                    audioPlayer.current.volume = 0.2
                   }
                 }}
               ></audio>
               <div className="flex smm:text-2xl text-base">
-                <button onClick={previous}>
+                <button onClick={previousTrack}>
                   <SkipBack className="mx-2" />
                 </button>
-                <button onClick={toggleAudio}>
+                <button
+                  onClick={() => {
+                    isPlaying === true
+                      ? setIsPlaying(false)
+                      : setIsPlaying(true)
+                  }}
+                >
                   {!isPlaying ? (
                     <Play className="mx-2" />
                   ) : (
                     <Pause className="mx-2" />
                   )}
                 </button>
-                <button onClick={next}>
+                <button onClick={nextTrack}>
                   <SkipForward className="mx-2" />
                 </button>
                 <button className="sm:hidden" onClick={close}>
@@ -257,11 +242,10 @@ export default function MusicPlayer({ songs }: songsProps) {
             <input
               className="appearance-none w-full bg-gray-300 overflow-hidden range-input shadow-lg"
               type="range"
-              defaultValue="0"
-              value={currentTime}
-              min="0"
+              defaultValue={0}
+              min={0}
               max={audioPlayer.current?.duration ?? duration}
-              step="0.01"
+              step={0.01}
               style={
                 {
                   '--progress': `${(currentTime / duration) * 100}%`,
@@ -281,6 +265,6 @@ export default function MusicPlayer({ songs }: songsProps) {
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }

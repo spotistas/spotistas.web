@@ -2,7 +2,7 @@ import { CircleNotch } from '@phosphor-icons/react'
 
 export function Loading() {
   return (
-    <div className="flex justify-center items-center m-auto w-full h-full bg-bgMain">
+    <div className="m-auto flex h-full w-full items-center justify-center bg-bgMain">
       <CircleNotch
         className="animate-spin text-green"
         size={32}
