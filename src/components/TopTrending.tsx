@@ -7,7 +7,6 @@ interface TopTrendingProps {
 }
 export function TopTrending({ data }: TopTrendingProps) {
   const [isLargeScreen, setIsLargeScreen] = useState(false)
-
   function handleResize() {
     setIsLargeScreen(window.innerWidth >= 768)
   }
@@ -29,7 +28,7 @@ export function TopTrending({ data }: TopTrendingProps) {
       </section>
       <section className="no-scrollbar flex w-full flex-col gap-4 overflow-y-hidden overflow-x-scroll px-4 pt-8 md:flex-row md:px-0">
         {data &&
-          data.slice(0, isLargeScreen ? 10 : 5).map((song, index) => {
+          data.tracks.slice(0, isLargeScreen ? 10 : 5).map((song, index) => {
             const regex = /\s*\(.*\)|\s*-.* /g
             const songNameFormated = song.name.split('-')
 

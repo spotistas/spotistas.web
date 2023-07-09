@@ -1,10 +1,26 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { DayMusicProps, Playlist, TopTrendingTypes, UserInfo } from './types'
+import {
+  DayMusicProps,
+  MonthArtistProps,
+  Playlist,
+  TopTrendingTypes,
+  UserInfo,
+} from './types'
 
 export const api: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:5001',
+  baseURL: 'https://spotistas.natanaelsc.xyz',
   withCredentials: true,
 })
+
+export async function getMonthArtist() {
+  try {
+    const response = await api.get('/artists/month')
+    return response.data as MonthArtistProps
+  } catch (err) {
+    console.log(err)
+    return undefined
+  }
+}
 
 export async function getMusicDay(): Promise<DayMusicProps | undefined> {
   try {

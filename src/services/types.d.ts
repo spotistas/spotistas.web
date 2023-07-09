@@ -1,3 +1,17 @@
+export interface MonthArtistProps {
+  image: string
+  name: string
+  tracks: {
+    name: string
+    image: string
+    preview_url: string
+    album: {
+      name: string
+    }
+    index: number
+  }[]
+}
+
 export interface Artist {
   id: string
   name: string
